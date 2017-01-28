@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist ibrarturi/yii2-latlng-finder "dev-master"
+php composer.phar require --prefer-dist fgh151/yii2-latlng-finder "dev-master"
 ```
 
 or add
 
 ```
-"ibrarturi/yii2-latlng-finder": "dev-master"
+"fgh151/yii2-latlng-finder": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -44,7 +44,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
     <input class="form-control" type="text" name="zoom" id="zoom">
 </div>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget(); ?>
+<?= \fgh151\latlngfinder\LatLngFinder::widget(); ?>
 ```
 
  * Default usage without Zoom Field
@@ -59,7 +59,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
     <input class="form-control" type="text" name="lng" id="lng">
 </div>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget([
+<?= \fgh151\latlngfinder\LatLngFinder::widget([
 	'enableZoom' => false 			// true, false
 ]); ?>
 ```
@@ -80,7 +80,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
     <input class="form-control" type="text" name="zoom" id="zoom">
 </div>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget([
+<?= \fgh151\latlngfinder\LatLngFinder::widget([
 	'latAttribute' => 'lat',		// Latitude text field id
 	'lngAttribute' => 'lng',		// Longitude text field id
 	'zoomAttribute' => 'zoom',		// Zoom text field id
@@ -101,7 +101,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
 <?= $form->field($model, 'lng') ?>
 <?= $form->field($model, 'zoom') ?>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget([
+<?= \fgh151\latlngfinder\LatLngFinder::widget([
     'model' => $model,				// model object
 ]); ?>
 
@@ -113,7 +113,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
 <?= $form->field($model, 'lat') ?>
 <?= $form->field($model, 'lng') ?>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget([
+<?= \fgh151\latlngfinder\LatLngFinder::widget([
     'model' => $model,				// model object
     'enableZoom' => false 			// true, false
 ]); ?>
@@ -127,7 +127,7 @@ Click once on the map to the get the marker and coordinates then you can drag th
 <?= $form->field($model, 'lng') ?>
 <?= $form->field($model, 'zoom') ?>
 
-<?= \ibrarturi\latlngfinder\LatLngFinder::widget([
+<?= \fgh151\latlngfinder\LatLngFinder::widget([
 	'model' => $model,				// model object
 	'latAttribute' => 'lat',		// Latitude attribute
 	'lngAttribute' => 'lng',		// Longitude attribute
@@ -147,4 +147,4 @@ Resources
 
  * [Project Page](https://developers.google.com/maps/documentation/javascript/examples/)
  * [Demo](http://ituri.net/gmap/latlongfinder)
- * [Github](https://github.com/ibrarturi/yii2-latlon-finder)
+ * [Github](https://github.com/fgh151/yii2-latlon-finder)

@@ -8,6 +8,10 @@
         {
             "name": "Ibrar Turi",
             "email": "ibrarturi@gmail.com"
+        },
+        {
+            "name": "Fedor B Grosky",
+            "email": "fedor@support-pc.org"
         }
     ],
     "require": {
@@ -15,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ibrarturi\\latlngfinder\\": ""
+            "fgh151\\latlngfinder\\": ""
         }
     }
 }

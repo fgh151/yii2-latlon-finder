@@ -1,7 +1,8 @@
 <?php
 
-namespace ibrarturi\latlngfinder;
+namespace fgh151\latlngfinder;
 
+use yii\base\InvalidConfigException;
 use yii\web\View;
 
 /**
@@ -14,6 +15,8 @@ use yii\web\View;
  */
 class LatLngFinder extends \yii\base\Widget
 {
+
+    public $googleApiKey = '';
     /**
      * @var string $latAttribute Latitude attribute id
      */
@@ -63,52 +66,58 @@ class LatLngFinder extends \yii\base\Widget
      * @var bool $enableZoomField If set to boolean true then the zoom value will be assinged to the zoom field
      */
     public $enableZoomField = null;
-    
+
     /**
      * @var object $model Object model
      */
     public $model = null;
 
-
+    /**
+     * @throws InvalidConfigException
+     */
     public function init()
     {
-    	parent::init();
+        if ($this->googleApiKey === '' || !$this->googleApiKey) {
+            throw new InvalidConfigException('Empty google maps api key');
+        }
 
-    	$this->model 				= ( isset($this->model) ) ? $this->model : null;
+        parent::init();
 
-    	if ($this->model) 
-    	{
-    		$formName = strtolower($this->model->formName());
+        $this->model 				= ( isset($this->model) ) ? $this->model : null;
 
-    		$this->latAttribute 	= ( isset($this->latAttribute) ) ? $formName.'-'.$this->latAttribute : $formName.'-'.'lat';
-	    	$this->lngAttribute 	= ( isset($this->lngAttribute) ) ? $formName.'-'.$this->lngAttribute : $formName.'-'.'lng';
-	    	$this->zoomAttribute 	= ( isset($this->zoomAttribute) ) ? $formName.'-'.$this->zoomAttribute : $formName.'-'.'zoom';
-    	} 
-    	else 
-    	{
-	    	$this->latAttribute 	= ( isset($this->latAttribute) ) ? $this->latAttribute : 'lat';
-	    	$this->lngAttribute 	= ( isset($this->lngAttribute) ) ? $this->lngAttribute : 'lng';
-	    	$this->zoomAttribute 	= ( isset($this->zoomAttribute) ) ? $this->zoomAttribute : 'zoom';
-		}
+        if ($this->model)
+        {
+            $formName = strtolower($this->model->formName());
 
-    	$this->mapCanvasId 		= ( isset($this->mapCanvasId) ) ? $this->mapCanvasId : 'map';
-    	$this->mapWidth 		= ( isset($this->mapWidth) ) ? $this->mapWidth : 450;
-    	$this->mapHeight 		= ( isset($this->mapHeight) ) ? $this->mapHeight : 300;
-    	$this->defaultLat 		= ( isset($this->defaultLat) ) ? $this->defaultLat : -34.397;
-    	$this->defaultLng 		= ( isset($this->defaultLng) ) ? $this->defaultLng : 150.644;
-    	$this->defaultZoom 		= ( isset($this->defaultZoom) ) ? $this->defaultZoom : 8;
-    	$this->enableZoomField	= ( isset($this->enableZoomField) ) ? ( ($this->enableZoomField==true) ? 1 : 0 ) : true;
+            $this->latAttribute 	= ( isset($this->latAttribute) ) ? $formName.'-'.$this->latAttribute : $formName.'-'.'lat';
+            $this->lngAttribute 	= ( isset($this->lngAttribute) ) ? $formName.'-'.$this->lngAttribute : $formName.'-'.'lng';
+            $this->zoomAttribute 	= ( isset($this->zoomAttribute) ) ? $formName.'-'.$this->zoomAttribute : $formName.'-'.'zoom';
+        }
+        else
+        {
+            $this->latAttribute 	= ( isset($this->latAttribute) ) ? $this->latAttribute : 'lat';
+            $this->lngAttribute 	= ( isset($this->lngAttribute) ) ? $this->lngAttribute : 'lng';
+            $this->zoomAttribute 	= ( isset($this->zoomAttribute) ) ? $this->zoomAttribute : 'zoom';
+        }
 
-    	$this->registerAssets();
+        $this->mapCanvasId 		= ( isset($this->mapCanvasId) ) ? $this->mapCanvasId : 'map';
+        $this->mapWidth 		= ( isset($this->mapWidth) ) ? $this->mapWidth : 450;
+        $this->mapHeight 		= ( isset($this->mapHeight) ) ? $this->mapHeight : 300;
+        $this->defaultLat 		= ( isset($this->defaultLat) ) ? $this->defaultLat : -34.397;
+        $this->defaultLng 		= ( isset($this->defaultLng) ) ? $this->defaultLng : 150.644;
+        $this->defaultZoom 		= ( isset($this->defaultZoom) ) ? $this->defaultZoom : 8;
+        $this->enableZoomField	= ( isset($this->enableZoomField) ) ? ( ($this->enableZoomField==true) ? 1 : 0 ) : true;
+
+        $this->registerAssets();
 
     }
 
     /**
-	 * @inheritdoc
-	 */
+     * @inheritdoc
+     */
     public function run()
     {
-    	$js = <<<SCRIPT
+        $js = <<<SCRIPT
 
     		var map = null;
     		var marker = null;
@@ -173,13 +182,13 @@ SCRIPT;
 
         $this->getView()->registerJs($js);
 
-    	echo '<div id="' . $this->mapCanvasId . '" style="width:'.$this->mapWidth.'px;height:'.$this->mapHeight.'px; margin-bottom: 20px;"></div>';
+        echo '<div id="' . $this->mapCanvasId . '" style="width:'.$this->mapWidth.'px;height:'.$this->mapHeight.'px; margin-bottom: 20px;"></div>';
 
     }
 
     protected function registerAssets()
-	{
-		$view = $this->getView();
-		$view->registerJsFile('https://maps.googleapis.com/maps/api/js', ['position' => View::POS_HEAD]);
-	}
+    {
+        $view = $this->getView();
+        $view->registerJsFile('https://maps.googleapis.com/maps/api/js?key='.$this->googleApiKey, ['position' => View::POS_HEAD]);
+    }
 }
