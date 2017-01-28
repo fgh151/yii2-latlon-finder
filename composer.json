@@ -1,5 +1,5 @@
 {
-    "name": "ibrarturi/yii2-latlng-finder",
+    "name": "fgh151/yii2-latlng-finder",
     "description": "Find Latitude and Longitude using google maps",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","latitude","longitude","google map","coordinates","finder","picker"],
